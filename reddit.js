@@ -19,17 +19,28 @@ $.ajax({
 var digestData = function(json){
   console.log("json request successful.");
     $.each(json.data.children, function(i, json){
-	title = escape(json.data.title);
-	     imgSrc = json.data.url;
-	     redditUrl = "http://www.reddit.com" + json.data.permalink;
-	     output = "<li>"+
-"<a href='" +redditUrl + "' title='"+title+"' target='_blank'>"+
-"<img src='" + imgSrc + "'>"+
-"</a></li>";
-	     $('section ul').append(output);
+	var title = escape(json.data.title);
+	var imgSrc = function(){
+            var redditUrl = json.data.url;
+	    if (!/\.jpg$|\.png$|\.gif$|\.jpeg$|\.bmp$/.test(redditUrl))   {
+	      //url is not an image
+	      if(redditUrl.search(/imgur/) == -1)
+		return 'http://placekitten.com/g/400/300';
+	      else{
+		return imgurRequest(redditUrl);
+	      }
+	    }
+	    return redditUrl;
+	};
+	redditUrl = "http://www.reddit.com" + json.data.permalink;
+	output = "<li>"+
+	  "<a href='" +redditUrl + "' title='"+title+"' target='_blank'>"+
+	  "<img src='" + imgSrc() + "'>"+
+	  "</a></li>";
+	$('section ul').append(output);
       });
-    $('.loading').hide();
-    startCycle();
+  $('.loading').hide();
+  startCycle();
 };
 
 function startCycle(){    //start colorbox
@@ -75,7 +86,30 @@ var resize = function(){
     clean();
   }
 }
+/**
+ * Resize the panel s.t. the size of the image  = size + height of the header with the titles
+ * when the title is long fucks everything up
+ **/
 var resizePanel = function(size){
   size.w < minW ? size.w = minW : console.log("safe") ;
-  $('section').css({width: size.w, height:size.h+20}); 
+  console.log("size h: " + $('header h1').height())
+  $('section').css({width: size.w, height:size.h+$('header h1').height()}); 
 };
+
+
+IMGUR_API = 'http://api.imgur.com/2/image/';
+var imgurRequest = function(url){
+
+  var hash = url.match(/imgur\.com\/(.*)/)[1];
+
+   return 'http://placekitten.com/g/300/200';
+  var imurl = IMGUR_API + hash;
+  console.log('@imgurRequest!! to ' + imurl);
+  $.ajax(imurl, 
+	 function(json){
+	   return json.image.links.original;
+	 }, 
+	 function(xhr, txt, e){
+	   console.log(e); return "";
+	 });
+}; 

@@ -13,6 +13,7 @@ border:1px solid #5F99CF;
 width:400px;
 height:400px;
 background-color:#FFFFFF;
+min-width:310px;
 overflow:hidden;
 }
 section h1{
@@ -35,13 +36,20 @@ float:right;
  font-size:0.7em;
 }
 header{
-height:35px;
+ min-height:35px;
+ min-width:310px;
 }
 
+ul{ clear:both;}
 
 ul li{
 list-style:none;
 margin:auto;
+min-width:310px;
+}
+li img{
+    margin:auto;
+    display:block;
 }
 
 footer{

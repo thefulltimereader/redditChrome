@@ -27,7 +27,7 @@ var digestData = function(json){
 	      if(redditUrl.search(/imgur/) == -1)
 		return 'http://placekitten.com/g/400/300';
 	      else{
-		return 'http://placekitten.com/g/200/300';// imgurRequest(redditUrl);
+		return imgurRequest(redditUrl);// 'http://placekitten.com/g/200/300'; 
 	      }
 	    }
 	    return redditUrl;
@@ -135,7 +135,7 @@ clean();
 
 
 IMGUR_API = 'http://api.imgur.com/2/image/';
-var imgurRequest = function(url){
+function imgurRequest(url){
 
   var hash = url.match(/imgur\.com\/(.*)/)[1];
 
@@ -144,6 +144,7 @@ var imgurRequest = function(url){
   var result = '';
   $.ajax({
     url:imurl, 
+	async: false,
 	dataType: 'json',
 	success:function(json){
 	   result= json.image.links.original;
@@ -155,4 +156,4 @@ var imgurRequest = function(url){
 	 }
     });
   return result;
-}; 
+  }; 

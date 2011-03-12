@@ -1,3 +1,4 @@
+
 var maxW = 400;
 var maxH = 500;
 var minW = 300;
@@ -139,7 +140,7 @@ function imgurRequest(url){
 
   var hash = url.match(/imgur\.com\/(.*)/)[1];
 
-  //return 'http://placekitten.com/g/300/200';
+  //return 'http://placekitten.com/g/30//0/200';
   var imurl = IMGUR_API + hash;
   var result = '';
   $.ajax({

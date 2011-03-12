@@ -23,17 +23,23 @@ section h1{
 }
 
 #prev, #next, h1{
-  float:left;
- text-align:center;
+ 
+  text-align:center;
+}
+h1{
+ min-width:246px;
 }
 #next{
-float:right;
+background-image:url('img/next.png');
+}
+#prev{
+ background-image:url('img/prev.png');
 }
 .arrows{
- width:5%;
- margin:10px 8px 0 8px;
+ width:32px;
+ height:32px;
  cursor: pointer;
- font-size:0.7em;
+ position:absolute;
 }
 header{
  min-height:35px;

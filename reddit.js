@@ -27,6 +27,9 @@ var digestData = function(json){
 	      if(redditUrl.search(/imgur/) == -1)
 		return 'http://placekitten.com/g/400/300';
 	      else{
+		var test = imgurRequest(redditUrl);
+		console.log('after imgurRequest: ' + test);
+
 		return imgurRequest(redditUrl);
 	      }
 	    }
@@ -53,8 +56,8 @@ function startCycle(){    //start colorbox
        });
 }
 function clean(){
+  console.log("done, remove:"+$('.curr').html());
   $('.curr').removeClass("curr");
-  console.log("done, remove:"+this);
 }
 
 function setTitle(){
@@ -70,7 +73,9 @@ var resize = function(){
   var imgH = $('.curr img').height();
     console.log("w: " + imgW + " h: " + imgH);
   if(imgW==0 || imgH ==0 || imgW == null){
-    setTimeout(resize,250);
+    console.log("koreha..??" +$('.curr').html() + " ");
+    //  if( $('.curr').html() != null)
+      setTimeout(resize,250);
   }
   else if (imgW > maxW || imgH > maxH){
     console.log('imresize');
@@ -79,11 +84,11 @@ var resize = function(){
     var ratioW = maxH*ratio;
     $('.curr img').width(ratioW);
     resizePanel({w: ratioW, h:maxH});
-    clean();
+    //clean();
   }
   else{
     resizePanel({w: imgW, h:imgH});
-    clean();
+    //    clean();
   }
 }
 /**
@@ -102,14 +107,20 @@ var imgurRequest = function(url){
 
   var hash = url.match(/imgur\.com\/(.*)/)[1];
 
-   return 'http://placekitten.com/g/300/200';
+  //return 'http://placekitten.com/g/300/200';
   var imurl = IMGUR_API + hash;
-  console.log('@imgurRequest!! to ' + imurl);
-  $.ajax(imurl, 
-	 function(json){
-	   return json.image.links.original;
+  var result = '';
+  $.ajax({
+    url:imurl, 
+	dataType: 'json',
+	success:function(json){
+	   result= json.image.links.original;
+	   console.log('inimgurR: ' + result);
+	   return result;
 	 }, 
-	 function(xhr, txt, e){
-	   console.log(e); return "";
-	 });
+	error:function(xhr, txt, e){
+	   console.error("error request to: " + imrul+ " :"+e); 
+	 }
+    });
+  return result;
 }; 

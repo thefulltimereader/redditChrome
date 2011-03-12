@@ -20,37 +20,38 @@ var digestData = function(json){
   console.log("json request successful.");
     $.each(json.data.children, function(i, json){
 	var title = escape(json.data.title);
-	var imgSrc = function(){
+	var imgSrc = (function(){
             var redditUrl = json.data.url;
 	    if (!/\.jpg$|\.png$|\.gif$|\.jpeg$|\.bmp$/.test(redditUrl))   {
 	      //url is not an image
 	      if(redditUrl.search(/imgur/) == -1)
 		return 'http://placekitten.com/g/400/300';
 	      else{
-		var test = imgurRequest(redditUrl);
-		console.log('after imgurRequest: ' + test);
-
-		return imgurRequest(redditUrl);
+		return 'http://placekitten.com/g/200/300';// imgurRequest(redditUrl);
 	      }
 	    }
 	    return redditUrl;
-	};
+	}());
 	redditUrl = "http://www.reddit.com" + json.data.permalink;
+	if (imgSrc=="") console.log(title);
 	output = "<li>"+
 	  "<a href='" +redditUrl + "' title='"+title+"' target='_blank'>"+
-	  "<img src='" + imgSrc() + "'>"+
+	  "<img src='" + imgSrc + "'>"+
 	  "</a></li>";
 	$('section ul').append(output);
       });
   $('.loading').hide();
-  startCycle();
+  $('li img').bind('load',function(){imresize(this)});
+  //  $('li img:last').bind('load',function(){console.log('start cycle');startCycle()});
+  $(window).load(function(){console.log('start cycle');startCycle()});
+  //  startCycle();
 };
 
 function startCycle(){    //start colorbox
  $("section ul").cycle({
      timeout:0,
        before: setTitle,
-       //       after: clean,
+       //after: clean,
        next: '#next',
        prev: '#prev'
        });
@@ -64,10 +65,34 @@ function setTitle(){
   $(this).addClass("curr");
   var title = unescape($(".curr a").attr('title'));
   $('section h1').html(title);  
-  resize();
-
+  // resize();
+  resizeFrame();
 }
-
+function imresize(img){
+  var imgW =$(img).width();
+  var imgH = $(img).height(); 
+ console.log("set im for " + $(img).attr('src')+" w: " + imgW + " h: " + imgH);
+  if (imgW > maxW || imgH > maxH){
+    //console.log("need imresize for: " + $(img).attr('src')+"w: " + imgW + " h: " + imgH);
+    if(maxH < imgH){
+    $(img).height(maxH);
+    var ratio = imgW/imgH;
+    var ratioW = maxH*ratio;
+    $(img).width(ratioW);
+    }
+    else{ //on width
+    $(img).width(maxW);
+    var ratio = imgH/imgW;
+    var ratioH = maxW*ratio;
+    $(img).height(ratioH);
+    }
+  }
+  else{
+    $(img).width(imgW);
+    $(img).height(imgH);
+  }
+}
+/*
 var resize = function(){
   var imgW =$('.curr img').width();
   var imgH = $('.curr img').height();
@@ -84,21 +109,28 @@ var resize = function(){
     var ratioW = maxH*ratio;
     $('.curr img').width(ratioW);
     resizePanel({w: ratioW, h:maxH});
-    //clean();
+    clean();
   }
   else{
     resizePanel({w: imgW, h:imgH});
-    //    clean();
+    clean();
   }
+}*/
+var resizeFrame = function(){
+  var imgW =$('.curr img').width();
+  var imgH = $('.curr img').height();
+  console.log("set frame to -> w: " + imgW + " h: " + imgH);
+  resizePanel({w: imgW, h:imgH});
+  
 }
 /**
  * Resize the panel s.t. the size of the image  = size + height of the header with the titles
  * when the title is long fucks everything up
  **/
 var resizePanel = function(size){
-  size.w < minW ? size.w = minW : console.log("safe") ;
-  console.log("size h: " + $('header h1').height())
-  $('section').css({width: size.w, height:size.h+$('header h1').height()}); 
+  //  size.w < minW ? size.w = minW : console.log("safe") ;
+  $('section').css({width: size.w, height:size.h+$('header h1').height()+13}); 
+clean();
 };
 
 

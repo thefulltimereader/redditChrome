@@ -3,7 +3,7 @@
   "version": "1.1",
   "description": "I just want to see reddit pics now, in the this window!",
   "browser_action": {
-    "default_icon": "img/icon.png",
+    "default_icon": "img/icon2.png",
     "popup": "popup.html"
   }
 }

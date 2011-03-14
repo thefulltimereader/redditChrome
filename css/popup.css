@@ -59,7 +59,11 @@ li img{
     margin:auto;
     display:block;
 }
-
+.gray{
+    color:#C6C6C6;
+    font-weight:bold;
+    float:left;
+}
 footer{
   font-size:0.5em;
 }

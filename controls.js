@@ -12,11 +12,10 @@ function start(){
     askReddit();
   }
   else{
-    console.log('got json from local storage: ' + last.json);
+    console.log('got json from local storage');
     digestData(last);
   }
   setPage(last);
-//  askReddit();
 };
 
 //fetch jsonfrom reddit pics
@@ -89,7 +88,7 @@ function setTitle(curr, next, opts){
   var id = opts.currSlide ==opts.lastSlide? 0: opts.currSlide;
   id = opts.currSlide;
   currId = id;
-  var title = unescape($("a[id='"+id+"']").attr('title'));
+  var title = "<div class='gray'>"+id+":</div>" + " " + unescape($("a[id='"+id+"']").attr('title'));
   console.log('use id:' +id + " and title: " + title);
   $('section h1').html(title);  
   resizeFrame(id);
@@ -123,7 +122,7 @@ $(document.documentElement).keyup(function(e){
       break;
     }
     if(dir!=0){
-      console.log('key push!! prev or next');
+      //console.log('key push!!');
 	$("section ul").cycle(currId + dir);
     }
   });

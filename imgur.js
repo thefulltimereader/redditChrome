@@ -21,6 +21,7 @@ function imgurRequest(post){
 
 function notAnImg(id){
   $('img[id='+id+']').attr('src', 'img/notanimg.gif');
+  $('a[id='+id+']').prepend('<p>Not an image nor an imgur page!!</p>');
 };
 
 

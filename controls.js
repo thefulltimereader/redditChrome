@@ -53,7 +53,7 @@ var digestData = function(data){
 	output = "<li>"+
 	  "<a href='" +post.redditUrl + "' title='"+post.title+"' target='_blank' id="+post.id+
 ">"+
-	  "<img src='' id="+post.id+">"+
+	  "<img src='' id="+post.id+" class='clear'>"+
 	  "</a></li>";
 	$('section ul').append(output);
 	$('li img').bind('load',function(){
@@ -124,6 +124,7 @@ $(document.documentElement).keyup(function(e){
     }
     if(dir!=0){
       console.log('key push!! prev or next');
+	$("section ul").cycle(currId + dir);
     }
   });
 

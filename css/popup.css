@@ -52,6 +52,8 @@ ul li{
 list-style:none;
 margin:auto;
 min-width:310px;
+font-size:0.8em;
+text-align:center;
 }
 li img{
     margin:auto;
@@ -61,7 +63,8 @@ li img{
 footer{
   font-size:0.5em;
 }
-footer p{
+
+p{
   margin:0px;
 }
 

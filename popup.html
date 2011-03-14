@@ -28,7 +28,7 @@ media="print">
 </section>
 <footer>
 <p></p>
-by dragonquest9
+&#169 <a href="mailto:">dragonquest9</a>
 <time datetime="2011-03-10"></time>
 </footer>
 </body>
@@ -47,6 +47,10 @@ by dragonquest9
 <script>
 $(document).ready(function(){
  start();
+
+$(window).unload(function(){
+    save();
+  });
 });
 
 

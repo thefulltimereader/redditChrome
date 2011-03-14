@@ -3,10 +3,13 @@ function resume(){
   json = localStorage.getItem("json");
   lastPage=localStorage.getItem("lastPage");
   lastTime = localStorage.getItem("lastTime");
-  if (lastTime!= null && new Date().getTime() - lastTime < TIME)
-  if(lastPage==null) lastPage = 0;
-  else  lastPage = parseInt(lastPage);
-  return {json:json, id:lastPage, time:lastTime};
+  if (lastTime!= null && new Date().getTime() - lastTime < TIME){
+    if(lastPage==null) lastPage = 0;
+    else  lastPage = parseInt(lastPage);
+    return {json:$.parseJSON(json), id:lastPage, time:lastTime};
+  } 
+  return {time:lastTime}; // need to do feed again
+  
 }
 
 function supports_html5_storage(){
@@ -19,15 +22,16 @@ function supports_html5_storage(){
 
 function saveData(json){
   if (!supports_html5_storage()){return false;}
-  localStorage.setItem("json",json);
+  localStorage.setItem("json", JSON.stringify(json));
   return true;
 }
 
 
-$('a').click(function(){
-    var time = new Date().getTime();
-    var id = $('img .curr').attr('id');
-    console.log('store id: ' + id + ')');
-    localStorage.setItem('lastPage', id);
-    localStorage.setItme('lastTime', time);
-  });
+function save(){
+   var time = new Date().getTime();
+    localStorage.setItem('lastPage', currId);
+    localStorage.setItem('lastTime', time);
+    console.log('stored : ' + currId + ' and time: '+time);
+ 
+}
+

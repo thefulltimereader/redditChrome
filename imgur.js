@@ -20,7 +20,7 @@ function imgurRequest(post){
 }; 
 
 function notAnImg(id){
-  $('img[id='+id+']').attr('src', 'http://placekitten.com/g/400/300');
+  $('img[id='+id+']').attr('src', 'img/notanimg.gif');
 };
 
 

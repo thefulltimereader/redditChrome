@@ -3,16 +3,20 @@ var maxH = 500;
 var minW = 300;
 var TIME =12000000; //20min
 var LIMIT = 20;
+var currId = 0;
 function start(){
   //Try if json exists in cache every 20min
   var last = resume();
-  if (last.data == null){
+  if (last.json == null){
+    console.log('no local storage data');
     askReddit();
   }
   else{
+    console.log('got json from local storage: ' + last.json);
     digestData(last);
-    setPage(last);
   }
+  setPage(last);
+//  askReddit();
 };
 
 //fetch jsonfrom reddit pics
@@ -21,10 +25,11 @@ function askReddit(){
    * using jsonp to go around cross-domain issues
    */
   $.ajax({
-    url:'http://www.reddit.com/r/pics/.json?limit='+LIMIT+'&jsonp=?',
+    url:'http://www.reddit.com/r/pics/.json?limit=20&jsonp=?',
 	dataType:'jsonp',
 	success:function(json){
-	digestData({json:json, id:0, time:null})
+	saveData(json);
+	digestData({json:json, id:0});
 	     },
 	error: function(xhr,status, errorThrown){
 	console.error("error!" + errorThrown);
@@ -34,7 +39,7 @@ function askReddit(){
 };
 
 var digestData = function(data){
-  json = data.json;
+  var json = data.json;
   console.log("json request to reddit successful.");
     $.each(json.data.children, function(i, json){
 	var post = {
@@ -74,10 +79,16 @@ function startCycle(page){    //start colorbox
        next: '#next',
        prev: '#prev'
        });
+ //add bindings after they're made
+ $('a').click(function(){
+    save();
+  });
 };
 
 function setTitle(curr, next, opts){
   var id = opts.currSlide ==opts.lastSlide? 0: opts.currSlide;
+  id = opts.currSlide;
+  currId = id;
   var title = unescape($("a[id='"+id+"']").attr('title'));
   console.log('use id:' +id + " and title: " + title);
   $('section h1').html(title);  
@@ -112,12 +123,14 @@ $(document.documentElement).keyup(function(e){
       break;
     }
     if(dir!=0){
-      console.log('prev or next');
+      console.log('key push!! prev or next');
     }
   });
 
 function setPage(last){
-  var msg = 'Your last visit was: '+new Date(last.time).toUTCString();
+  var msg = 'Your last visit was: '+new Date(parseInt(last.time)).toUTCString();
   if(last.time!=null)
     $('footer p').html(msg);
 };
+
+

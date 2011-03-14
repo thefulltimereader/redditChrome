@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="css/blueprint/print.css" type="text/css"
+media="print">
+<!--[if lt IE 8]>
+  <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
 <![endif]-->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
-<script>!window.jQuery && document.write('<script src="jquery-1.5.min.js"><\/script>')</script>
-<script src="reddit.js"></script>
-<script src="jquery.cycle.all.min.js"></script>
-<script src="jquery.ae.image.resize.min.js"></script>
-<link rel="stylesheet" href="popup.css" /> 
+
+<link rel="stylesheet" href="css/popup.css" />
+
 </head>
 <body>
 <section>
@@ -19,14 +20,36 @@
 </h1>
 <div id="next" class="arrows"></div>
 </header>
-<img class='loading' src='img/loader.gif'>
+<div class='loading'>
+<img src='img/loader.gif'>
+  </div>
 <ul>
 </ul>
 </section>
 <footer>
-by dragonquest9</br>
+<p></p>
+by dragonquest9
 <time datetime="2011-03-10"></time>
 </footer>
 </body>
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script>!window.jQuery && document.write('<script src="jquery-1.5.min.js"><\/script>')</script>
+<!-- <script src="reddit.js"></script> -->
+<script src="imgur.js"></script>
+<script src="controls.js"></script>
+<script src="image.js"></script>
+<script src="storage.js"></script>
+<script src="jquery.cycle.all.min.js"></script>
+<script>
+$(document).ready(function(){
+ start();
+});
+
+
+</script>
 
 </html>

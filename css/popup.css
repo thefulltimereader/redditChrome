@@ -10,8 +10,8 @@ a:active, a:link, a:visited{color:black; text-decoration:none;}
 section{
 -webkit-border-radius:12px;
 border:1px solid #5F99CF;
-width:400px;
-height:400px;
+height:150px;
+width:150px;
 background-color:#FFFFFF;
 min-width:310px;
 overflow:hidden;
@@ -27,19 +27,19 @@ section h1{
 }
 h1{
  min-width:246px;
+ margin-top:10px;
 }
 #next{
-background-image:url('img/next.png');
+background-image:url('../img/next.png');
 float:right;
 }
 #prev{
- background-image:url('img/prev.png');
+ background-image:url('../img/prev.png');
 }
 .arrows{
  width:32px;
  height:32px;
  cursor: pointer;
- position:absolute;
 }
 header{
  min-height:35px;
@@ -63,6 +63,8 @@ footer{
 }
 
 .loading{
- margin:auto;
- display:block;
+ width:300px;
+height:100%;
 }
+.loading img{
+ margin:auto; display:block; width:32px; height:32px;margin-top:25px}

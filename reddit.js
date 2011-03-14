@@ -8,17 +8,16 @@ var minW = 300;
  */
 $.ajax({
   url:'http://www.reddit.com/r/pics/.json?limit=25&jsonp=?',
-  dataType:'jsonp',
+      dataType:'jsonp',
       success:function(json){digestData(json)},
-  error: function(xhr,status, errorThrown){
-    console.error("error!" + errorThrown);
+      error: function(xhr,status, errorThrown){
+      console.error("error!" + errorThrown);
     }
-  }    
-);
+});
 
 
 var digestData = function(json){
-  console.log("json request successful.");
+  console.log("json request to reddit successful.");
     $.each(json.data.children, function(i, json){
 	var title = escape(json.data.title);
 	var imgSrc = (function(){
@@ -33,26 +32,24 @@ var digestData = function(json){
 	    }
 	    return redditUrl;
 	}());
+	
 	redditUrl = "http://www.reddit.com" + json.data.permalink;
 	if (imgSrc=="") console.log(title);
 	output = "<li>"+
-	  "<a href='" +redditUrl + "' title='"+title+"' target='_blank'>"+
-	  "<img src='" + imgSrc + "'>"+
+	  "<a href='" +redditUrl + "' title='"+title+"' target='_blank' >"+
+	  "<img src='" + imgSrc + "' id="+i+">"+
 	  "</a></li>";
 	$('section ul').append(output);
       });
   $('.loading').hide();
   $('li img').bind('load',function(){imresize(this)});
-  //  $('li img:last').bind('load',function(){console.log('start cycle');startCycle()});
   $(window).load(function(){console.log('start cycle');startCycle()});
-  //  startCycle();
 };
 
 function startCycle(){    //start colorbox
  $("section ul").cycle({
      timeout:0,
        before: setTitle,
-       //after: clean,
        next: '#next',
        prev: '#prev'
        });
@@ -66,7 +63,6 @@ function setTitle(){
   $(this).addClass("curr");
   var title = unescape($(".curr a").attr('title'));
   $('section h1').html(title);  
-  // resize();
   resizeFrame();
 }
 function imresize(img){
@@ -93,30 +89,7 @@ function imresize(img){
     $(img).height(imgH);
   }
 }
-/*
-var resize = function(){
-  var imgW =$('.curr img').width();
-  var imgH = $('.curr img').height();
-    console.log("w: " + imgW + " h: " + imgH);
-  if(imgW==0 || imgH ==0 || imgW == null){
-    console.log("koreha..??" +$('.curr').html() + " ");
-    //  if( $('.curr').html() != null)
-      setTimeout(resize,250);
-  }
-  else if (imgW > maxW || imgH > maxH){
-    console.log('imresize');
-    $('.curr img').height(maxH);
-    var ratio = imgW/imgH;
-    var ratioW = maxH*ratio;
-    $('.curr img').width(ratioW);
-    resizePanel({w: ratioW, h:maxH});
-    clean();
-  }
-  else{
-    resizePanel({w: imgW, h:imgH});
-    clean();
-  }
-}*/
+
 var resizeFrame = function(){
   var imgW =$('.curr img').width();
   var imgH = $('.curr img').height();
@@ -129,7 +102,6 @@ var resizeFrame = function(){
  * when the title is long fucks everything up
  **/
 var resizePanel = function(size){
-  //  size.w < minW ? size.w = minW : console.log("safe") ;
   $('section').css({width: size.w, height:size.h+$('header h1').height()+13}); 
 clean();
 };
@@ -137,9 +109,7 @@ clean();
 
 IMGUR_API = 'http://api.imgur.com/2/image/';
 function imgurRequest(url){
-
   var hash = url.match(/imgur\.com\/(.*)/)[1];
-
   //return 'http://placekitten.com/g/30//0/200';
   var imurl = IMGUR_API + hash;
   var result = '';

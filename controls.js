@@ -1,7 +1,7 @@
 var maxW = 400;
 var maxH = 500;
 var minW = 300;
-var TIME =12000000; //20min
+var TIME =1200000; //20min
 var LIMIT = 20;
 var currId = 0;
 function start(){
@@ -73,6 +73,8 @@ var digestData = function(data){
 function startCycle(page){    //start colorbox
  $("section ul").cycle({
        timeout:0,
+       speed:150,
+       activePagerClass: 'curr',
        startingSlide: page,
        after: setTitle,
        next: '#next',
@@ -88,7 +90,7 @@ function setTitle(curr, next, opts){
   var id = opts.currSlide ==opts.lastSlide? 0: opts.currSlide;
   id = opts.currSlide;
   currId = id;
-  var title = "<div class='gray'>"+id+":</div>" + " " + unescape($("a[id='"+id+"']").attr('title'));
+  var title = "<div class='gray'>"+(id+1)+":</div>" + " " + unescape($("a[id='"+id+"']").attr('title'));
   console.log('use id:' +id + " and title: " + title);
   $('section h1').html(title);  
   resizeFrame(id);
@@ -123,7 +125,9 @@ $(document.documentElement).keyup(function(e){
     }
     if(dir!=0){
       //console.log('key push!!');
-	$("section ul").cycle(currId + dir);
+      var goto = currId + dir;
+      goto = goto > 19 ? goto = 0: goto<0? goto = 19: goto;
+	$("section ul").cycle(goto);
     }
   });
 

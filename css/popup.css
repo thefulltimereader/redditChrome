@@ -19,6 +19,7 @@ overflow:hidden;
 section h1{
  font-weight:bold;
  font-size:0.9em;
+line-height:1.25;
 }
 
 #prev, #next, h1{

@@ -2,7 +2,7 @@ var maxW = 400;
 var maxH = 500;
 var minW = 300;
 var TIME =1200000; //20min
-var LIMIT = 20;
+var LIMIT = 10;
 var currId = 0;
 function start(){
   //Try if json exists in cache every 20min
@@ -24,7 +24,7 @@ function askReddit(){
    * using jsonp to go around cross-domain issues
    */
   $.ajax({
-    url:'http://www.reddit.com/r/pics/.json?limit=20&jsonp=?',
+    url:'http://www.reddit.com/r/pics/.json?limit='+LIMIT+'&jsonp=?',
 	dataType:'jsonp',
 	success:function(json){
 	saveData(json);
@@ -126,7 +126,7 @@ $(document.documentElement).keyup(function(e){
     if(dir!=0){
       //console.log('key push!!');
       var goto = currId + dir;
-      goto = goto > 19 ? goto = 0: goto<0? goto = 19: goto;
+      goto = goto > (LIMIT-1) ? goto = 0: goto<0? goto = (LIMIT-1): goto;
 	$("section ul").cycle(goto);
     }
   });

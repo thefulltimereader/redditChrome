@@ -28,11 +28,12 @@ function notAnImg(id){
 function setImSrc(post){
      if (!/\.jpg$|\.png$|\.gif$|\.jpeg$|\.bmp$/.test(post.originalSrc))   {
 	      //url is not an image
-	      if(post.originalSrc.search(/imgur/) == -1)
-		notAnImg(post.id);
-	      else{
-		imgurRequest(post);
-	      }
+       if(post.originalSrc.search(/imgur/) == -1)
+	 notAnImg(post.id);
+       else{
+	 if(post.originalSrc.search(/imgur.+\/a\//) > 0) notAnImg(post.id); //if imgur album
+	 else imgurRequest(post);
+       }
      }
      else{
        $('img[id='+post.id+']').attr('src', post.originalSrc);

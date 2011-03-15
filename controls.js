@@ -132,7 +132,7 @@ $(document.documentElement).keyup(function(e){
   });
 
 function setPage(last){
-  var msg = 'Your last visit was: '+new Date(parseInt(last.time)).toUTCString();
+  var msg = 'Your last update was: '+new Date(parseInt(last.time)).toUTCString();
   if(last.time!=null)
     $('footer p').html(msg);
 };
